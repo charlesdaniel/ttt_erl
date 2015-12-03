@@ -47,7 +47,7 @@ get_move(Board, ?USER) ->
 % Get a move for the computer (We just choose a random location for now)
 % TODO: Make this smarter
 get_move(_Board, ?COMPUTER) ->
-    rand:uniform(9).
+    random:uniform(9).
 
 
 % Call a get_move for the player until they give us a valid empty spot
