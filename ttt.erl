@@ -41,8 +41,11 @@ place_piece(Board, Piece, Move) ->
 % Prompt the user for a move after printing the board out
 get_move(Board, ?USER) ->
     print_board(Board),
-    {ok, [Move]} = io:fread("Your Move -> ", "~d"),
-    Move;
+    {ok, [Move]} = io:fread("Your Move (q=Quit) -> ", "~c"),
+    case Move of
+        "q" -> quit;
+        _ -> list_to_integer(Move)
+    end;
 
 % Get a move for the computer 
 % Go through the Board looking for 2 positions in a row with the same
@@ -91,12 +94,18 @@ get_move(Board, ?COMPUTER) ->
 % Call a get_move for the player until they give us a valid empty spot
 process_move(Board, Piece) ->
     Move = get_move(Board, Piece),
-    case place_piece(Board, Piece, Move) of
-        {ok, NewBoard} ->
-            NewBoard;
-        {invalid_move, _} ->
-            io:format("Illegal Move ~n"),
-            process_move(Board, Piece)
+    case Move of
+        quit -> 
+            io:format("Quitting, Please Wait... ~n"),
+            init:stop();
+        _ ->
+            case place_piece(Board, Piece, Move) of
+                {ok, NewBoard} ->
+                    NewBoard;
+                {invalid_move, _} ->
+                    io:format("Illegal Move ~n"),
+                    process_move(Board, Piece)
+            end
     end.
 
 
