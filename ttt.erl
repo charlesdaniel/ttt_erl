@@ -44,10 +44,48 @@ get_move(Board, ?USER) ->
     {ok, [Move]} = io:fread("Your Move -> ", "~d"),
     Move;
 
-% Get a move for the computer (We just choose a random location for now)
-% TODO: Make this smarter
-get_move(_Board, ?COMPUTER) ->
-    random:uniform(9).
+% Get a move for the computer 
+% Go through the Board looking for 2 positions in a row with the same
+% piece and pick the 3rd available spot. If we don't see any 2 in a row
+% locations we just choose a random location.
+% TODO: Figure out how to write this more efficiently/erlangy
+get_move(Board, ?COMPUTER) ->
+    case Board of
+        [{1, A, A}, {_, _, _}, {_, _, _}] -> 1;
+        [{1, _, _}, {A, _, _}, {A, _, _}] -> 1;
+        [{1, _, _}, {_, A, _}, {_, _, A}] -> 1;
+
+        [{A, 2, A}, {_, _, _}, {_, _, _}] -> 2;
+        [{_, 2, _}, {_, A, _}, {_, A, _}] -> 2;
+
+        [{A, A, 3}, {_, _, _}, {_, _, _}] -> 3;
+        [{_, _, 3}, {_, A, _}, {A, _, _}] -> 3;
+        [{_, _, 3}, {_, _, A}, {_, _, A}] -> 3;
+         
+        [{_, _, _}, {4, A, A}, {_, _, _}] -> 4;
+        [{A, _, _}, {4, _, _}, {A, _, _}] -> 4;
+
+        [{A, _, _}, {_, 5, _}, {_, _, A}] -> 5;
+        [{_, A, _}, {_, 5, _}, {_, A, _}] -> 5;
+        [{_, _, A}, {_, 5, _}, {A, _, _}] -> 5;
+        [{_, _, _}, {A, 5, A}, {_, _, _}] -> 5;
+
+        [{_, _, A}, {_, _, 6}, {_, _, A}] -> 6;
+        [{_, _, _}, {A, A, 6}, {_, _, _}] -> 6;
+
+        [{A, _, _}, {A, _, _}, {7, _, _}] -> 7;
+        [{_, _, A}, {_, A, _}, {7, _, _}] -> 7;
+        [{_, _, _}, {_, _, _}, {7, A, A}] -> 7;
+
+        [{_, A, _}, {_, A, _}, {_, 8, _}] -> 8;
+        [{_, _, _}, {_, _, _}, {A, 8, A}] -> 8;
+
+        [{_, _, A}, {_, _, A}, {_, _, 9}] -> 9;
+        [{A, _, _}, {_, A, _}, {_, _, 9}] -> 9;
+        [{_, _, _}, {_, _, _}, {A, A, 9}] -> 9;
+
+        _ -> random:uniform(9)
+    end.
 
 
 % Call a get_move for the player until they give us a valid empty spot
