@@ -4,6 +4,23 @@
 This is my first attempt at an actual program while trying to learn Erlang.
 It's a basic text based tic tac toe game in Erlang.
 
+###### Running it via GNU Make with an installed Erlang
+If you have `erl` in your executable `$PATH` then simply run
+
+```
+make run
+```
+
+###### Running it via GNU Make with Docker
+If you don't have Erlang on your machine but you do have Docker installed then run
+
+```
+make docker-run
+```
+
+If you don't have GNU Make but do have Docker then just look at how the Docker is being run in the Makefile's docker-run target
+
+###### Running it in the Erlang shell
 
 To Run it get into an Erlang shell and compile `ttt` then run `ttt:start_game()`
 
@@ -23,9 +40,8 @@ Eshell V7.1  (abort with ^G)
 Your Move ->
 ```
 
-You are "x", simply enter a number from 1..9 and hit Enter. The computer will then take a turn and we repeat until there is a winner or there are no more spots left.
+You are "X" (the computer is "O"), simply enter a number from 1..9 and hit Enter. The computer will then take a turn and we repeat until there is a winner or there are no more spots left.
 
 ###TODO
- - Make the computer actually play somewhat intelligently rather than picking random spots.
  - Rework the code to be more Erlangy
  - Better GUI
