@@ -6,8 +6,8 @@ all: run
 run: ttt.beam
 	erl -noshell -s ttt start_game -s init stop
 
-docker-build-beam:
-	docker run --rm -it -v $(shell pwd):/home/ttt -w /home/ttt msaraiva/erlang erlc ttt.erl
-
-docker-run: docker-build-beam
-	docker run --rm -it -v $(shell pwd):/home/ttt -w /home/ttt msaraiva/erlang erl -noshell -s ttt start_game -s init stop
+docker-run:
+	@echo "\nBuilding Docker image...\n"
+	docker build -t ttt .
+	@echo "\nDocker Build Complete... Now Running ttt within docker\n\n\n"
+	docker run --rm -it ttt
