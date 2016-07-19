@@ -4,6 +4,10 @@ FROM msaraiva/erlang
 
 MAINTAINER Charles Daniel <charles.sam.daniel@gmail.com>
 
+# Create a new user called ttt_user and run it as that.
+# This is so we don't go running things as root.
+RUN adduser -h /home/ttt -D ttt_user
+USER ttt_user
 WORKDIR /home/ttt
 ADD . /home/ttt
 
