@@ -2,7 +2,7 @@
 # https://hub.docker.com/r/msaraiva/erlang/
 FROM msaraiva/erlang
 
-MAINTAINER Charles Daniel <charles.sam.daniel@gmail.com>
+LABEL maintainer="Charles Daniel <charles.sam.daniel@gmail.com>"
 
 # Create a new user called ttt_user and run it as that.
 # This is so we don't go running things as root.
